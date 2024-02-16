@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const inquirer = require('inquirer');
-const { Circle, Square, Triangle } = require('./Lib/Shapes/shapes');
+const { Circle, Square, Triangle } = require('./lib/shapes/shapes');
 
 async function promptUser() {
     return inquirer.prompt([
@@ -22,7 +22,13 @@ async function promptUser() {
             type: 'input',
             name: 'textColor',
             message: 'What color do you want the text?',
-            default: 'black'
+            validate: function(value) {
+                const pass = /^#?([a-f0-9]{6}|[a-f0-9]{3})$/i.test(value) || /^[a-z]+$/i.test(value);
+                if (pass) {
+                    return true;
+                }
+                return 'Please enter a valid color keyword or hex code (e.g., "red" or "#ff0000").';
+            }
         },
         {
             type: 'list',
@@ -34,7 +40,14 @@ async function promptUser() {
             type: 'input',
             name: 'shapeColor',
             message: 'What color would you like the main shape to be?',
-            default: 'blue'
+            validate: function(value) {
+                // Validate hex color or CSS color keywords
+                const pass = /^#?([a-f0-9]{6}|[a-f0-9]{3})$/i.test(value) || /^[a-z]+$/i.test(value);
+                if (pass) {
+                    return true;
+                }
+                return 'Please enter a valid color keyword or hex code (e.g., "red" or "#ff0000").';
+            }
         }
     ]);
 }

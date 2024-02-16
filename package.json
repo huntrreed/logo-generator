@@ -16,6 +16,6 @@
     "inquirer": "^8.2.4"
   },
   "jest": {
-    "testMatch": ["**/*.test.js"]
+    "testMatch": ["**/tests/**/*.test.js"]
 }
 }
